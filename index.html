@@ -1,0 +1,1134 @@
+<!DOCTYPE html>
+<html lang="sk">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>KSS Test - Kvalita Softvérových Systémov</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      min-height: 100vh;
+      padding: 20px;
+    }
+
+    .container {
+      max-width: 900px;
+      margin: 0 auto;
+      background: white;
+      border-radius: 20px;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+      overflow: hidden;
+    }
+
+    .header {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+      padding: 30px;
+      text-align: center;
+    }
+
+    .header h1 {
+      font-size: 2.5em;
+      margin-bottom: 10px;
+    }
+
+    .header p {
+      font-size: 1.1em;
+      opacity: 0.9;
+    }
+
+    .score-board {
+      display: flex;
+      justify-content: space-around;
+      padding: 20px;
+      background: #f8f9fa;
+      border-bottom: 2px solid #e9ecef;
+    }
+
+    .score-item {
+      text-align: center;
+    }
+
+    .score-item .label {
+      font-size: 0.9em;
+      color: #6c757d;
+      margin-bottom: 5px;
+    }
+
+    .score-item .value {
+      font-size: 1.8em;
+      font-weight: bold;
+      color: #667eea;
+    }
+
+    .quiz-container {
+      padding: 30px;
+    }
+
+    .question-card {
+      background: #fff;
+      border: 2px solid #e9ecef;
+      border-radius: 15px;
+      padding: 25px;
+      margin-bottom: 20px;
+      transition: all 0.3s ease;
+    }
+
+    .question-card.answered-correct {
+      border-color: #28a745;
+      background: #d4edda;
+    }
+
+    .question-card.answered-wrong {
+      border-color: #dc3545;
+      background: #f8d7da;
+    }
+
+    .question-number {
+      display: inline-block;
+      background: #667eea;
+      color: white;
+      padding: 5px 15px;
+      border-radius: 20px;
+      font-size: 0.9em;
+      margin-bottom: 15px;
+    }
+
+    .question-text {
+      font-size: 1.2em;
+      font-weight: 600;
+      margin-bottom: 20px;
+      color: #2c3e50;
+      line-height: 1.6;
+    }
+
+    .options {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .option {
+      padding: 15px 20px;
+      border: 2px solid #e9ecef;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      background: white;
+      font-size: 1em;
+    }
+
+    .option:hover:not(.disabled) {
+      border-color: #667eea;
+      background: #f0f4ff;
+      transform: translateX(5px);
+    }
+
+    .option.selected {
+      border-color: #667eea;
+      background: #667eea;
+      color: white;
+    }
+
+    .option.correct {
+      border-color: #28a745;
+      background: #28a745;
+      color: white;
+    }
+
+    .option.wrong {
+      border-color: #dc3545;
+      background: #dc3545;
+      color: white;
+    }
+
+    .option.disabled {
+      cursor: not-allowed;
+      opacity: 0.7;
+    }
+
+    .feedback {
+      margin-top: 15px;
+      padding: 15px;
+      border-radius: 10px;
+      font-size: 0.95em;
+      line-height: 1.6;
+    }
+
+    .feedback.correct {
+      background: #d4edda;
+      border: 1px solid #28a745;
+      color: #155724;
+    }
+
+    .feedback.wrong {
+      background: #f8d7da;
+      border: 1px solid #dc3545;
+      color: #721c24;
+    }
+
+    .feedback strong {
+      display: block;
+      margin-bottom: 8px;
+      font-size: 1.1em;
+    }
+
+    .btn-container {
+      display: flex;
+      gap: 15px;
+      justify-content: center;
+      margin-top: 30px;
+      padding-top: 20px;
+      border-top: 2px solid #e9ecef;
+    }
+
+    .btn {
+      padding: 12px 30px;
+      border: none;
+      border-radius: 25px;
+      font-size: 1em;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 10px 20px rgba(102, 126, 234, 0.4);
+    }
+
+    .btn-secondary {
+      background: #6c757d;
+      color: white;
+    }
+
+    .btn-secondary:hover {
+      background: #5a6268;
+    }
+
+    .final-results {
+      text-align: center;
+      padding: 40px;
+    }
+
+    .final-results h2 {
+      font-size: 2.5em;
+      margin-bottom: 20px;
+      color: #667eea;
+    }
+
+    .final-score {
+      font-size: 4em;
+      font-weight: bold;
+      color: #667eea;
+      margin: 20px 0;
+    }
+
+    .percentage {
+      font-size: 1.5em;
+      color: #6c757d;
+      margin-bottom: 30px;
+    }
+
+    .result-message {
+      font-size: 1.3em;
+      margin-bottom: 30px;
+      padding: 20px;
+      border-radius: 10px;
+    }
+
+    .result-message.excellent {
+      background: #d4edda;
+      color: #155724;
+    }
+
+    .result-message.good {
+      background: #d1ecf1;
+      color: #0c5460;
+    }
+
+    .result-message.needs-improvement {
+      background: #fff3cd;
+      color: #856404;
+    }
+
+    .hidden {
+      display: none;
+    }
+
+    @media (max-width: 768px) {
+      .header h1 {
+        font-size: 1.8em;
+      }
+
+      .question-text {
+        font-size: 1.1em;
+      }
+
+      .btn-container {
+        flex-direction: column;
+      }
+    }
+  </style>
+</head>
+<body>
+<div class="container">
+  <div class="header">
+    <h1>🎓 KSS Test</h1>
+    <p>Kvalita Softvérových Systémov - Interaktívny test</p>
+  </div>
+
+  <div class="score-board">
+    <div class="score-item">
+      <div class="label">Otázka</div>
+      <div class="value" id="currentQuestion">1</div>
+    </div>
+    <div class="score-item">
+      <div class="label">Správne</div>
+      <div class="value" id="correctCount">0</div>
+    </div>
+    <div class="score-item">
+      <div class="label">Nesprávne</div>
+      <div class="value" id="wrongCount">0</div>
+    </div>
+    <div class="score-item">
+      <div class="label">Celkovo</div>
+      <div class="value" id="totalQuestions">58</div>
+    </div>
+  </div>
+
+  <div id="quizContent" class="quiz-container">
+    <!-- Questions will be loaded here -->
+  </div>
+
+  <div id="finalResults" class="final-results hidden">
+    <h2>🎉 Test dokončený!</h2>
+    <div class="final-score" id="finalScore">0/30</div>
+    <div class="percentage" id="finalPercentage">0%</div>
+    <div class="result-message" id="resultMessage"></div>
+    <button class="btn btn-primary" onclick="restartQuiz()">🔄 Reštartovať test</button>
+  </div>
+</div>
+
+<script>
+  const questions = [
+    // SOFTVÉROVÉ METRIKY
+    {
+      question: "Aká je definícia softvérovej metriky?",
+      options: [
+        "Proces vývoja softvéru",
+        "Spôsob merania určitej softvérovej veličiny alebo softvérovej špecifikácie",
+        "Nástroj na automatizáciu testovania",
+        "Typ softvérového licencovania"
+      ],
+      correct: 1,
+      explanation: "Softvérová metrika je spôsob merania určitej softvérovej veličiny alebo softvérovej špecifikácie. Používa sa na kvantitatívne hodnotenie rôznych aspektov softvérového produktu alebo procesu."
+    },
+    {
+      question: "Čo je cieľom softvérových metrík?",
+      options: [
+        "Zvýchlenie vývoja",
+        "Meranie a hodnotenie rôznych aspektov softvérového vývoja",
+        "Automatické testovanie",
+        "Distribúcia softvéru"
+      ],
+      correct: 1,
+      explanation: "Cieľom softvérových metrík je meranie a hodnotenie rôznych aspektov softvérového vývoja, čo umožňuje priebežné hodnotenie a zlepšovanie kvality softvéru."
+    },
+    {
+      question: "Aký je význam metriky cyklomatická zložitosť?",
+      options: [
+        "Počet priamych potomkov triedy",
+        "Počet lineárne nezávislých ciest programu",
+        "Počet riadkov kódu",
+        "Počet metód v triede"
+      ],
+      correct: 1,
+      explanation: "Cyklomatická zložitosť meria počet lineárne nezávislých ciest programu. Vypočíta sa vzorcom v(G) = e - n + 2, kde e je počet hrán a n je počet uzlov v grafe toku riadenia."
+    },
+    {
+      question: "Čo znamená vzorec v(G) = e - n + 2 v cyklomatickej zložitosti?",
+      options: [
+        "e = počet chýb, n = počet modulov",
+        "e = počet hrán, n = počet uzlov v grafe toku riadenia",
+        "e = počet tried, n = počet metód",
+        "e = počet riadkov, n = počet funkcií"
+      ],
+      correct: 1,
+      explanation: "V cyklomatickej zložitosti: e je počet hrán a n je počet uzlov v diagrame toku riadenia programu. Výsledok udáva počet lineárne nezávislých ciest."
+    },
+    {
+      question: "Aké typy metrík poznáme?",
+      options: [
+        "Len procesné metriky",
+        "Metriky pre výrobok, proces a zdroje",
+        "Len produktové metriky",
+        "Len objektovo-orientované metriky"
+      ],
+      correct: 1,
+      explanation: "Softvérové metriky môžeme rozdeliť na: Metriky pre výrobok (veľkosť, zložitosť, spoľahlivosť), Metriky pre proces (úsilie, náklady, čas) a Metriky pre zdroje."
+    },
+
+    // GQM
+    {
+      question: "Čo znamená GQM?",
+      options: [
+        "General Quality Management",
+        "Goal Question Metric",
+        "Good Quality Measurement",
+        "Global Quality Model"
+      ],
+      correct: 1,
+      explanation: "GQM znamená Goal-Question-Metric. Je to prístup zhora-nadol na vytvorenie meracieho systému založeného na cieľoch pre vývoj softvéru."
+    },
+    {
+      question: "Aké sú základné fázy metódy GQM podľa Berghout a Solingen?",
+      options: [
+        "Analýza, Návrh, Implementácia, Testovanie",
+        "Plánovanie, Definícia, Zbieranie dát, Interpretácia",
+        "Požiadavky, Špecifikácia, Vývoj, Údržba",
+        "Inicializácia, Exekúcia, Kontrola, Uzavretie"
+      ],
+      correct: 1,
+      explanation: "Základné fázy GQM sú: Plánovanie (zostavenie tímu), Definícia (ciele, otázky, metriky), Zbieranie dát a Interpretácia výsledkov."
+    },
+    {
+      question: "V GQM definujeme ciele. Ktorý cieľ má správne vlastnosti?",
+      options: [
+        "Zavedenie štandardu ISO",
+        "Zníženie chybovosti softvéru o 10 percent",
+        "Zvýšenie zisku spoločnosti",
+        "Odstránenie chýb v softvéri"
+      ],
+      correct: 1,
+      explanation: "Správny cieľ musí byť SMART - špecifický, merateľný, dosiahnuteľný, relevantný a časovo ohraničený. 'Zníženie chybovosti o 10 percent' spĺňa tieto kritériá."
+    },
+    {
+      question: "Koľko dokumentov sa vypracováva vo fáze Definovanie v GQM?",
+      options: [
+        "2 dokumenty",
+        "3 dokumenty - GQM plán, plán merania, plán analýzy",
+        "4 dokumenty",
+        "5 dokumentov"
+      ],
+      correct: 1,
+      explanation: "Vo fáze Definovanie sa vypracovávajú 3 dokumenty: GQM plán, plán merania a plán analýzy."
+    },
+    {
+      question: "Aké sú úrovne v GQM paradigme?",
+      options: [
+        "Konceptuálna a Operatívna",
+        "Konceptuálna, Operatívna a Kvantitatívna",
+        "Analýza, Návrh, Implementácia",
+        "Plánovanie, Realizácia, Kontrola"
+      ],
+      correct: 1,
+      explanation: "V GQM sú definované tri úrovne: Konceptuálna (Ciele), Operatívna (Otázky) a Kvantitatívna (Metriky)."
+    },
+
+    // ISO 9001 A CERTIFIKÁCIA
+    {
+      question: "Počas procesu certifikácie ISO 9001 člen tímu zabudol zaviesť jednu z požiadaviek zavádzanej normy, spôsobilo to nasledovné:",
+      options: [
+        "Systémovú nezhodu a certifikácia je ohrozená",
+        "Systémovú nezhodu a certifikácia nie je ohrozená",
+        "Realizačnú nezhodu a certifikácia je ohrozená",
+        "Realizačnú nezhodu a certifikácia nie je ohrozená"
+      ],
+      correct: 0,
+      explanation: "Nezavedenie požiadavky normy predstavuje systémovú nezhodu, ktorá ohrozuje certifikáciu. Systémové nezhody musia byť odstránené pred udelením certifikátu."
+    },
+    {
+      question: "Čo je systémová nezhoda?",
+      options: [
+        "Jednorázové pochybenie",
+        "Nezavedenie požiadavky normy, generuje ďalšie nezhody",
+        "Chyba v dokumentácii",
+        "Oneskorenie projektu"
+      ],
+      correct: 1,
+      explanation: "Systémová nezhoda znamená nezavedenie a nerealizovanie niektorej z požiadaviek normy. Systémové nezhody generujú ďalšie nezhody a ich opakovanie."
+    },
+    {
+      question: "Čo je realizačná nezhoda?",
+      options: [
+        "Chyba v celom systéme",
+        "Nevykonanie niektorých stanovených akcií, negeneruje ďalšie nezhody",
+        "Chyba v architektúre",
+        "Nedostatok dokumentácie"
+      ],
+      correct: 1,
+      explanation: "Realizačná nezhoda je nevykonanie niektorých zo stanovených akcií. Vzniká zabudnutím alebo zanedbaním požiadaviek. Takáto nezhoda negeneruje ďalšie nezhody."
+    },
+    {
+      question: "Aké sú zásady manažérstva kvality podľa ISO 9000?",
+      options: [
+        "Len orientácia na zákazníka a vodcovstvo",
+        "Orientácia na zákazníka, Vodcovstvo, Angažovanosť pracovníkov, Procesný prístup, Systémový prístup, Neustále zlepšovanie, Rozhodnutia na faktoch",
+        "Len procesný a systémový prístup",
+        "Len neustále zlepšovanie"
+      ],
+      correct: 1,
+      explanation: "ISO 9000 definuje 7 hlavných zásad manažérstva kvality vrátane orientácie na zákazníka, vodcovstva, angažovanosti pracovníkov a ďalších."
+    },
+    {
+      question: "Aké sú benefity ISO štandardov pre softvérové inžinierstvo?",
+      options: [
+        "Povinnosť používať konkrétne jazyky",
+        "Zníženie rizika a nákladov, zvýšenie dôvery zákazníka",
+        "Automatické zabezpečenie kompatibility",
+        "Obmedzenie inovácií"
+      ],
+      correct: 1,
+      explanation: "ISO štandardy prinášajú zníženie rizika a nákladov, zvyšujú dôveru zákazníka v kvalitu softvéru a pomáhajú zabezpečiť konzistentnosť procesov."
+    },
+    {
+      question: "Z ktorých noriem sa skladá rodina ISO 9000?",
+      options: [
+        "Len ISO 9001",
+        "ISO 9000 (základy), ISO 9001 (požiadavky), ISO 9004 (zlepšovanie)",
+        "ISO 9000 a ISO 9126",
+        "ISO 9001 a ISO 25000"
+      ],
+      correct: 1,
+      explanation: "Rodina ISO 9000 obsahuje: ISO 9000:2005 (základy a slovník), ISO 9001:2000 (požiadavky), ISO 9004:2000 (smernica na zlepšovanie)."
+    },
+
+    // ISO 9126 CHARAKTERISTIKY KVALITY
+    {
+      question: "Aké sú charakteristiky kvality softvéru podľa ISO 9126?",
+      options: [
+        "Rýchlosť, Cena, Design",
+        "Funkčnosť, Spoľahlivosť, Použiteľnosť, Účinnosť, Udržiavateľnosť, Prenositeľnosť",
+        "Výkon, Bezpečnosť, Dostupnosť",
+        "Modularita, Škálovateľnosť, Dokumentácia"
+      ],
+      correct: 1,
+      explanation: "ISO 9126 definuje 6 hlavných charakteristík kvality: Funkčnosť, Spoľahlivosť, Použiteľnosť, Účinnosť, Udržiavateľnosť a Prenositeľnosť."
+    },
+    {
+      question: "Aké subcharakteristiky má Funkčnosť v ISO 9126?",
+      options: [
+        "Len vhodnosť a presnosť",
+        "Vhodnosť, Presnosť, Schopnosť spolupracovať, Bezpečnosť",
+        "Len bezpečnosť",
+        "Výkon a spoľahlivosť"
+      ],
+      correct: 1,
+      explanation: "Funkčnosť má subcharakteristiky: vhodnosť, presnosť, schopnosť spolupracovať, bezpečnosť a zhoda s požiadavkami na funkčnosť."
+    },
+    {
+      question: "Aké subcharakteristiky má Spoľahlivosť v ISO 9126?",
+      options: [
+        "Len zrelosť",
+        "Zrelosť, Odolnosť, Obnoviteľnosť",
+        "Len obnoviteľnosť",
+        "Rýchlosť a presnosť"
+      ],
+      correct: 1,
+      explanation: "Spoľahlivosť zahŕňa: zrelosť/vyspelosť, odolnosť voči chybám, obnoviteľnosť a zhodu s požiadavkami."
+    },
+    {
+      question: "Čo patrí pod Použiteľnosť v ISO 9126?",
+      options: [
+        "Len zrozumiteľnosť",
+        "Zrozumiteľnosť, Zvládnuteľnosť, Prevádzkovateľnosť, Atraktivita",
+        "Len atraktivita",
+        "Rýchlosť a efektívnosť"
+      ],
+      correct: 1,
+      explanation: "Použiteľnosť obsahuje: zrozumiteľnosť, zvládnuteľnosť, prevádzkovateľnosť, atraktivitu a zhodu s požiadavkami."
+    },
+    {
+      question: "Aké subcharakteristiky má Účinnosť v ISO 9126?",
+      options: [
+        "Presnosť a bezpečnosť",
+        "Reakčný čas a Využitie zdrojov",
+        "Modularita a flexibilita",
+        "Testovateľnosť a udržiavateľnosť"
+      ],
+      correct: 1,
+      explanation: "Účinnosť má dve hlavné subcharakteristiky: reakčný čas (odozva systému) a využitie zdrojov (efektívnosť)."
+    },
+
+    // V-MODEL
+    {
+      question: "Kedy je vhodné používať V-model testovania?",
+      options: [
+        "Pre malé a stredné projekty s nejasne definovanými požiadavkami",
+        "Pre malé a stredné projekty s jasne definovanými požiadavkami",
+        "Pre veľké projekty s nejasne definovanými požiadavkami",
+        "Pre všetky typy projektov"
+      ],
+      correct: 1,
+      explanation: "V-model je vhodný pre malé a stredné projekty, kde sú jasne definované a pevne stanovené požiadavky. Nie je vhodný pre projekty s častými zmenami požiadaviek."
+    },
+    {
+      question: "Pri V-modeli testovania, akceptačné testovanie sa pripravia podľa:",
+      options: [
+        "Kódu",
+        "Špecifikovaných požiadaviek",
+        "Modulov",
+        "Architektúry"
+      ],
+      correct: 1,
+      explanation: "Akceptačné testy sa vytvárajú vo fáze analýzy požiadaviek podľa potrieb zákazníka a špecifikovaných požiadaviek."
+    },
+    {
+      question: "Čo testuje unit testovanie vo V-modeli?",
+      options: [
+        "Celý systém",
+        "Technický návrh na úrovni kódu",
+        "Integráciu modulov",
+        "Akceptáciu používateľmi"
+      ],
+      correct: 1,
+      explanation: "Unit testovanie testuje na úrovni kódu a overuje technický návrh. Vykonáva sa vo fáze návrhu modulu. Nie je schopný otestovať všetky chyby."
+    },
+    {
+      question: "Čo testuje integračné testovanie vo V-modeli?",
+      options: [
+        "Jednotlivé funkcie",
+        "Spoluprácu modulov",
+        "Výkon systému",
+        "Používateľské rozhranie"
+      ],
+      correct: 1,
+      explanation: "Integračné testovanie zaisťuje, že všetky moduly spolupracujú dobre. Testy sú vytvorené vo fáze architektonického návrhu."
+    },
+    {
+      question: "Čo testuje systémové testovanie vo V-modeli?",
+      options: [
+        "Jednotlivé moduly",
+        "Kompletnú funkčnosť systému, výkon a regresné testovanie",
+        "Integráciu komponentov",
+        "Kvalitu kódu"
+      ],
+      correct: 1,
+      explanation: "Systémové testovanie kontroluje kompletnú funkčnosť systému. Viac pozornosti sa venuje testovaniu výkonu a regresnému testovaniu."
+    },
+    {
+      question: "Čo testuje akceptačné testovanie vo V-modeli?",
+      options: [
+        "Výkon aplikácie",
+        "Kompatibilitu s inými systémami a nefunkcionálne požiadavky",
+        "Bezpečnosť systému",
+        "Dokumentáciu"
+      ],
+      correct: 1,
+      explanation: "Akceptačné testovanie zabezpečuje, že systém je kompatibilný s inými systémami. V užívateľskom prostredí sa testujú nefunkcionálne problémy ako čas načítania a výkon."
+    },
+    {
+      question: "Aká je výhoda V-modelu?",
+      options: [
+        "Flexibilita pri zmenách",
+        "Poruchy sa zistia už v počiatočnom štádiu",
+        "Minimálna dokumentácia",
+        "Rýchly vývoj"
+      ],
+      correct: 1,
+      explanation: "V-model je disciplinovaný model, kde sa plánovanie, testovanie a navrhovanie testov vykonáva ešte pred kódovaním. Poruchy sa zistia už v samotnom počiatočnom štádiu."
+    },
+    {
+      question: "Aká je nevýhoda V-modelu?",
+      options: [
+        "Príliš jednoduchý",
+        "Nie je vhodný pre zložité projekty a projekty s častými zmenami požiadaviek",
+        "Nedostatočné testovanie",
+        "Príliš veľa dokumentácie"
+      ],
+      correct: 1,
+      explanation: "V-model nie je vhodný pre žiadne zložité projekty ani pre prebiehajúci projekt, ktorý je nejasný a v ktorom dochádza k zmenám v požiadavkách."
+    },
+    {
+      question: "Aké fázy má V-model na strane verifikácie?",
+      options: [
+        "Len analýza požiadaviek",
+        "Analýza požiadaviek, Návrh systému, Architektonický návrh, Návrh modulu, Kódovanie",
+        "Len kódovanie a testovanie",
+        "Plánovanie a implementácia"
+      ],
+      correct: 1,
+      explanation: "Verifikačná fáza V-modelu obsahuje: Analýzu požiadaviek, Návrh systému, Architektonický návrh, Návrh modulu a Fázu kódovania."
+    },
+
+    // AGILNÝ VÝVOJ
+    {
+      question: "Aká je rola zákazníka v agilnom vývoji?",
+      options: [
+        "Pasívna",
+        "Aktívna",
+        "Žiadna",
+        "Občasná"
+      ],
+      correct: 1,
+      explanation: "V agilnom modeli má zákazník aktívnu rolu. Vo vývojovom tíme je zástupca zákazníka, ktorý udržiava kontakt so zákazníkom počas vývoja softvéru a dôraz sa kladie na spokojnosť zákazníkov."
+    },
+    {
+      question: "Aký je hlavný princíp agilného modelu vývoja?",
+      options: [
+        "Rozsiahla dokumentácia",
+        "Prispôsobivosť procesov a spokojnosť zákazníkov",
+        "Striktné dodržiavanie plánu",
+        "Minimálna komunikácia"
+      ],
+      correct: 1,
+      explanation: "V agilnom modeli sa dôraz kladie na prispôsobivosť procesov a spokojnosť zákazníkov. Model bol vytvorený kvôli zmenám uprostred vývoja."
+    },
+    {
+      question: "Ako dlho trvá jedna iterácia v agilnom modeli?",
+      options: [
+        "1 týždeň",
+        "2-3 týždne",
+        "1 mesiac",
+        "3 mesiace"
+      ],
+      correct: 1,
+      explanation: "Každá iterácia v agilnom modeli je malá, aby sa dala ľahko spravovať. Môže byť hotová za dva-tri týždne."
+    },
+    {
+      question: "Aká je veľkosť vývojového tímu v agilnom modeli?",
+      options: [
+        "2-3 ľudia",
+        "5-9 ľudí",
+        "10-15 ľudí",
+        "20+ ľudí"
+      ],
+      correct: 1,
+      explanation: "V agilnom modeli sa odporúča, aby veľkosť vývojového tímu bola malá (5 až 9 ľudí), aby členovia tímu mohli komunikovať tvárou v tvár."
+    },
+    {
+      question: "Čo je pair programming v agilnom vývoji?",
+      options: [
+        "Dvaja programátori pracujú samostatne",
+        "Jeden programátor kóduje, druhý kontroluje kód a menia si role",
+        "Dvaja programátori testujú kód",
+        "Programátori pracujú na rôznych projektoch"
+      ],
+      correct: 1,
+      explanation: "Pri agilnom vývoji spolupracujú dvaja programátori. Jeden kóduje a druhý kontroluje kód. Obaja programátori stále menia svoje úlohy."
+    },
+    {
+      question: "Aká je výhoda agilného modelu?",
+      options: [
+        "Rozsiahla dokumentácia",
+        "Málo chýb, krátky čas iterácie, kontakt so zákazníkom",
+        "Dokonalé plánovanie",
+        "Minimálna komunikácia"
+      ],
+      correct: 1,
+      explanation: "Výhody agilného modelu zahŕňajú: málo chýb (pair programming), krátky čas iterácie, priamy kontakt so zákazníkom, tímovú prácu a jednoduché, flexibilné procesy."
+    },
+    {
+      question: "Aká je nevýhoda agilného modelu?",
+      options: [
+        "Príliš veľa dokumentácie",
+        "Nemôže zvládnuť zložité závislosti, nedostatok formálnej dokumentácie",
+        "Príliš pomalý",
+        "Nefunguje pre malé projekty"
+      ],
+      correct: 1,
+      explanation: "Nevýhody: nemôže zvládnuť zložité závislosti, nedostatok formálnej dokumentácie môže vytvoriť zmätok, závislosť od zástupcu zákazníka a problémy s odhadmi."
+    },
+
+    // CMMI
+    {
+      question: "Koľko úrovní má CMMI maturity model?",
+      options: [
+        "3 úrovne",
+        "5 úrovní",
+        "7 úrovní",
+        "10 úrovní"
+      ],
+      correct: 1,
+      explanation: "CMMI maturity model má 5 úrovní: 1. Počiatočná (Initial), 2. Opakovateľná (Managed), 3. Definovaná (Defined), 4. Riadená (Quantitatively Managed), 5. Optimalizujúca (Optimizing)."
+    },
+    {
+      question: "Aké sú capability levels v CMMI?",
+      options: [
+        "3 úrovne",
+        "6 úrovní: Neúplná, Vykonávaná, Opakovateľná, Definovaná, Riadená, Optimalizujúca",
+        "4 úrovne",
+        "7 úrovní"
+      ],
+      correct: 1,
+      explanation: "Capability levels: 0. Neúplná, 1. Vykonávaná, 2. Opakovateľná (Managed), 3. Definovaná, 4. Riadená (Quantitatively Managed), 5. Optimalizujúca (Optimizing)."
+    },
+    {
+      question: "Aký je prínos CMMI?",
+      options: [
+        "Len zvýšená produktivita",
+        "Zlepšenie plánovania, produktivita, kvalita, spokojnosť zákazníka, nižšie náklady",
+        "Len nižšie náklady",
+        "Len lepšia dokumentácia"
+      ],
+      correct: 1,
+      explanation: "Prínos CMMI: Zlepšenie predpovede plánovania, zvýšená produktivita, vylepšená kvalita, väčšie uspokojenie zákazníka, vyššia morálka zamestnancov, zníženie nákladov na kvalitu."
+    },
+    {
+      question: "Aké reprezentácie má CMMI?",
+      options: [
+        "Len stupňovitú",
+        "Stupňovitú (Maturity levels) a Kontinuálnu (Capability levels)",
+        "Len kontinuálnu",
+        "Hierarchickú a lineárnu"
+      ],
+      correct: 1,
+      explanation: "CMMI má dve reprezentácie: Stupňovitú (zameraná na celkovú úroveň - Maturity levels) a Kontinuálnu (zameraná na procesy - Capability levels)."
+    },
+
+    // TESTOVANIE VŠEOBECNE
+    {
+      question: "Unit test:",
+      options: [
+        "Testuje celý systém",
+        "Izoluje časť kódu a overí jeho správnosť",
+        "Testuje kompatibilitu",
+        "Testuje výkon"
+      ],
+      correct: 1,
+      explanation: "Unit test izoluje časť kódu (zvyčajne funkciu alebo metódu) a overuje jej správnosť. Testuje sa na úrovni kódu a overuje technický návrh."
+    },
+    {
+      question: "Čo je výhodou integračného testovania?",
+      options: [
+        "Nízke náklady",
+        "Zlepšenie kvality systému",
+        "Rýchle vykonanie",
+        "Automatizácia"
+      ],
+      correct: 1,
+      explanation: "Integračné testovanie zlepšuje kvalitu systému tým, že zaisťuje, že všetky moduly spolupracujú dobre a odhaľuje kritické chyby v spolupráci modulov."
+    },
+    {
+      question: "Aký je cieľ systémového testovania?",
+      options: [
+        "Testovať časť systému",
+        "Testovať kompletný integrovaný systém",
+        "Testovať jednotlivé moduly",
+        "Testovať vizuálny dizajn"
+      ],
+      correct: 1,
+      explanation: "Systémové testovanie kontroluje kompletnú funkčnosť systému. V tomto type testovania sa viac pozornosti venuje testovaniu výkonu a regresnému testovaniu."
+    },
+    {
+      question: "Prečo je dôležité klásť dôraz na kvalitu kódu?",
+      options: [
+        "Nemá vplyv na výkon",
+        "Zlepšuje udržiavateľnosť, čitateľnosť a znižuje chyby",
+        "Má význam len v rozsiahlych projektoch",
+        "Rýchlosť je dôležitejšia než kvalita"
+      ],
+      correct: 1,
+      explanation: "Kvalitný kód zlepšuje udržiavateľnosť, čitateľnosť a znižuje pravdepodobnosť chýb, čo má pozitívny vpliv na celý životný cyklus softvéru."
+    },
+    {
+      question: "Čo je cieľom testovania softvéru?",
+      options: [
+        "Len nájsť chyby",
+        "Dosiahnutie požadovanej kvality z hľadiska funkčnosti, spoľahlivosti, výkonnosti, použiteľnosti",
+        "Len zvýšiť rýchlosť",
+        "Len dokumentovať kód"
+      ],
+      correct: 1,
+      explanation: "Testovanie softvéru je súbor procesov na kontrolu kvality, ktorých cieľom je dosiahnutie požadovanej kvality z hľadiska funkčnosti, spoľahlivosti, výkonnosti, použiteľnosti a podporovateľnosti."
+    },
+
+    // ŽIVOTNÝ CYKLUS CHYBY
+    {
+      question: "Aké sú hlavné fázy životného cyklu chyby?",
+      options: [
+        "Nájdenie a oprava",
+        "New, Assigned, Open, Fixed, Retest, Closed, Reopened",
+        "Start a End",
+        "Test a Deploy"
+      ],
+      correct: 1,
+      explanation: "Životný cyklus chyby zahŕňa: New (nová), Assigned (priradená), Open (otvorená), Fixed (opravená), Retest (retestovaná), Closed (zatvorená), Reopened (znovuotvorená)."
+    },
+    {
+      question: "Aké sú výhody sledovania životného cyklu chyby?",
+      options: [
+        "Len dokumentácia",
+        "Vysokokvalitný produkt, znížené náklady, lepšia komunikácia, skoré odhalenie problémov",
+        "Len rýchlejší vývoj",
+        "Minimálna dokumentácia"
+      ],
+      correct: 1,
+      explanation: "Výhody: Vysokokvalitný produkt, znížené náklady (dobre zdokumentované kroky), lepšia komunikácia v tíme, skoré odhalenie problémov, zvýšená spokojnosť zákazníkov."
+    },
+    {
+      question: "Čo je rozdiel medzi Error, Bug a Failure?",
+      options: [
+        "Sú to synonymá",
+        "Error (chyba/omyl) má za následok Bug (defekt), ktorý má za následok Failure (zlyhanie)",
+        "Bug je to isté ako Failure",
+        "Error je to isté ako Failure"
+      ],
+      correct: 1,
+      explanation: "Error (chyba, omyl programátora) vedie k Bug (defekt v kóde), ktorý sa prejavuje ako Failure (zlyhanie systému pri vykonaní)."
+    },
+
+    // ŠTANDARD ISO/IEC/IEEE 29119
+    {
+      question: "Koľko častí má štandard ISO/IEC/IEEE 29119?",
+      options: [
+        "3 časti",
+        "5 častí: Concepts, Processes, Documentation, Techniques, Keyword-driven",
+        "2 časti",
+        "7 častí"
+      ],
+      correct: 1,
+      explanation: "Štandard ISO/IEC/IEEE 29119 má 5 častí: Part 1 (Concepts and definitions), Part 2 (Test processes), Part 3 (Test documentation), Part 4 (Test techniques), Part 5 (Keyword-driven testing)."
+    },
+
+    // DOPLŇUJÚCE OTÁZKY
+    {
+      question: "Čo je verifikácia?",
+      options: [
+        "Testovanie produktu zákazníkom",
+        "Overenie, či produkt bol vyrobený správne (Are we building the product right?)",
+        "Nasadenie produktu do produkcie",
+        "Dokumentovanie produktu"
+      ],
+      correct: 1,
+      explanation: "Verifikácia overuje, či produkt bol vyrobený správne podľa špecifikácie (Are we building the product right?). Ide o objektívne hodnotenie."
+    },
+    {
+      question: "Čo je validácia?",
+      options: [
+        "Kontrola syntaxe kódu",
+        "Overenie, či sme vyrobili správny produkt (Are we building the right product?)",
+        "Kompilácia kódu",
+        "Unit testovanie"
+      ],
+      correct: 1,
+      explanation: "Validácia overuje, či sme vyrobili správny produkt, ktorý spĺňa potreby zákazníka (Are we building the right product?). Ide o subjektívne hodnotenie."
+    },
+    {
+      question: "Aká je definícia kvality softvéru?",
+      options: [
+        "Len funkčnosť",
+        "Miera, do akej softvér spĺňa definované požiadavky a uspokojuje potreby používateľov",
+        "Len výkon",
+        "Len cena"
+      ],
+      correct: 1,
+      explanation: "Kvalita softvéru je miera, do akej softvér spĺňa definované požiadavky a uspokojuje potreby používateľov, zahŕňa funkčné aj nefunkčné atribúty."
+    },
+    {
+      question: "Čo je black-box testovanie?",
+      options: [
+        "Testovanie vnútornej štruktúry",
+        "Testovanie bez znalosti vnútornej implementácie, len na základe špecifikácie",
+        "Testovanie len databázy",
+        "Testovanie výkonu"
+      ],
+      correct: 1,
+      explanation: "Black-box testovanie je funkcionálne testovanie bez znalosti vnútornej implementácie. Testeri sa zaujímajú len o to, či systém vykonáva funkcie správne."
+    },
+    {
+      question: "Čo je white-box testovanie?",
+      options: [
+        "Testovanie len GUI",
+        "Testovanie s plnou znalosťou vnútornej štruktúry a implementácie",
+        "Testovanie len dokumentácie",
+        "Akceptačné testovanie"
+      ],
+      correct: 1,
+      explanation: "White-box testovanie je štrukturálne testovanie s plnou znalosťou vnútornej implementácie kódu. Používa sa napr. pri unit testovaní."
+    },
+    {
+      question: "Čo sú regresné testy?",
+      options: [
+        "Testy nových funkcií",
+        "Testy, ktoré overujú, že zmeny v kóde nespôsobili nové chyby v už fungujúcej funkcionalite",
+        "Testy výkonu",
+        "Testy bezpečnosti"
+      ],
+      correct: 1,
+      explanation: "Regresné testy overujú, že zmeny, opravy alebo nové funkcie nespôsobili chyby v už existujúcej a fungujúcej funkcionalite systému."
+    },
+    {
+      question: "Čo je smoke testing?",
+      options: [
+        "Testovanie bezpečnosti",
+        "Základné testovanie kritických funkcií na overenie, či je build stabilný pre ďalšie testovanie",
+        "Testovanie výkonu pod záťažou",
+        "Finálne akceptačné testovanie"
+      ],
+      correct: 1,
+      explanation: "Smoke testing je základné testovanie kritických funkcií, aby sa overilo, či je build dostatočne stabilný na to, aby mohol pokračovať v ďalšom testovaní."
+    },
+    {
+      question: "Čo je continuous integration (CI)?",
+      options: [
+        "Manuálne testovanie raz týždenne",
+        "Pravidelné automatické začleňovanie zmien kódu do hlavnej vetvy s automatickými testami",
+        "Nasadenie do produkcie raz mesačne",
+        "Dokumentovanie zmien"
+      ],
+      correct: 1,
+      explanation: "Continuous Integration je vývojová prax, kde sa zmeny kódu pravidelne automaticky začleňujú do hlavnej vetvy a spúšťajú sa automatické testy."
+    }
+  ];
+
+  let currentQuestionIndex = 0;
+  let correctAnswers = 0;
+  let wrongAnswers = 0;
+  let answeredQuestions = new Set();
+
+  function loadQuiz() {
+    const quizContent = document.getElementById('quizContent');
+    quizContent.innerHTML = '';
+
+    questions.forEach((q, index) => {
+      const questionCard = document.createElement('div');
+      questionCard.className = 'question-card';
+      questionCard.id = `question-${index}`;
+
+      const questionNumber = document.createElement('span');
+      questionNumber.className = 'question-number';
+      questionNumber.textContent = `Otázka ${index + 1}`;
+
+      const questionText = document.createElement('div');
+      questionText.className = 'question-text';
+      questionText.textContent = q.question;
+
+      const optionsDiv = document.createElement('div');
+      optionsDiv.className = 'options';
+
+      q.options.forEach((option, optIndex) => {
+        const optionDiv = document.createElement('div');
+        optionDiv.className = 'option';
+        optionDiv.textContent = option;
+        optionDiv.onclick = () => selectAnswer(index, optIndex);
+        optionDiv.id = `option-${index}-${optIndex}`;
+        optionsDiv.appendChild(optionDiv);
+      });
+
+      questionCard.appendChild(questionNumber);
+      questionCard.appendChild(questionText);
+      questionCard.appendChild(optionsDiv);
+
+      quizContent.appendChild(questionCard);
+    });
+
+    const btnContainer = document.createElement('div');
+    btnContainer.className = 'btn-container';
+    btnContainer.innerHTML = `
+                <button class="btn btn-secondary" onclick="scrollToTop()">⬆️ Na začiatok</button>
+                <button class="btn btn-primary" onclick="showResults()">✅ Zobraziť výsledky</button>
+            `;
+    quizContent.appendChild(btnContainer);
+  }
+
+  function selectAnswer(questionIndex, selectedOption) {
+    if (answeredQuestions.has(questionIndex)) {
+      return;
+    }
+
+    const question = questions[questionIndex];
+    const isCorrect = selectedOption === question.correct;
+
+    answeredQuestions.add(questionIndex);
+
+    if (isCorrect) {
+      correctAnswers++;
+      document.getElementById('correctCount').textContent = correctAnswers;
+    } else {
+      wrongAnswers++;
+      document.getElementById('wrongCount').textContent = wrongAnswers;
+    }
+
+    const questionCard = document.getElementById(`question-${questionIndex}`);
+    questionCard.className = `question-card ${isCorrect ? 'answered-correct' : 'answered-wrong'}`;
+
+    for (let i = 0; i < question.options.length; i++) {
+      const optionDiv = document.getElementById(`option-${questionIndex}-${i}`);
+      optionDiv.classList.add('disabled');
+
+      if (i === question.correct) {
+        optionDiv.classList.add('correct');
+      } else if (i === selectedOption && !isCorrect) {
+        optionDiv.classList.add('wrong');
+      }
+    }
+
+    const feedback = document.createElement('div');
+    feedback.className = `feedback ${isCorrect ? 'correct' : 'wrong'}`;
+    feedback.innerHTML = `
+                <strong>${isCorrect ? '✅ Správne!' : '❌ Nesprávne'}</strong>
+                ${question.explanation}
+            `;
+    questionCard.appendChild(feedback);
+
+    setTimeout(() => {
+      feedback.scrollIntoView({behavior: 'smooth', block: 'center'});
+    }, 100);
+  }
+
+  function showResults() {
+    document.getElementById('quizContent').classList.add('hidden');
+    document.getElementById('finalResults').classList.remove('hidden');
+
+    const totalQuestions = questions.length;
+    const percentage = Math.round((correctAnswers / totalQuestions) * 100);
+
+    document.getElementById('finalScore').textContent = `${correctAnswers}/${totalQuestions}`;
+    document.getElementById('finalPercentage').textContent = `${percentage}%`;
+
+    const resultMessage = document.getElementById('resultMessage');
+    if (percentage >= 90) {
+      resultMessage.className = 'result-message excellent';
+      resultMessage.textContent = '🌟 Výborne! Máte vynikajúce znalosti z oblasti kvality softvérových systémov!';
+    } else if (percentage >= 70) {
+      resultMessage.className = 'result-message good';
+      resultMessage.textContent = '👍 Dobrá práca! Máte solídne znalosti, ale ešte je priestor na zlepšenie.';
+    } else {
+      resultMessage.className = 'result-message needs-improvement';
+      resultMessage.textContent = '📚 Odporúčame si zopakovať materiály a skúsiť test znova.';
+    }
+
+    window.scrollTo({top: 0, behavior: 'smooth'});
+  }
+
+  function scrollToTop() {
+    window.scrollTo({top: 0, behavior: 'smooth'});
+  }
+
+  function restartQuiz() {
+    currentQuestionIndex = 0;
+    correctAnswers = 0;
+    wrongAnswers = 0;
+    answeredQuestions.clear();
+
+    document.getElementById('correctCount').textContent = '0';
+    document.getElementById('wrongCount').textContent = '0';
+    document.getElementById('currentQuestion').textContent = '1';
+
+    document.getElementById('quizContent').classList.remove('hidden');
+    document.getElementById('finalResults').classList.add('hidden');
+
+    loadQuiz();
+    window.scrollTo({top: 0, behavior: 'smooth'});
+  }
+
+  window.onload = () => {
+    loadQuiz();
+  };
+</script>
+</body>
+</html>
