@@ -323,48 +323,50 @@
 </div>
 
 <script>
+  // Skopíruj tento array a vlož ho do HTML súboru namiesto pôvodného questions array
+
   const questions = [
     // SOFTVÉROVÉ METRIKY
     {
       question: "Aká je definícia softvérovej metriky?",
       options: [
-        "Proces vývoja softvéru",
-        "Spôsob merania určitej softvérovej veličiny alebo softvérovej špecifikácie",
-        "Nástroj na automatizáciu testovania",
+        "Spôsob merania určitej softvérovej veličiny",
+        "Proces automatizácie testovania",
+        "Vývojový proces softvéru",
         "Typ softvérového licencovania"
       ],
-      correct: 1,
+      correct: 0,
       explanation: "Softvérová metrika je spôsob merania určitej softvérovej veličiny alebo softvérovej špecifikácie. Používa sa na kvantitatívne hodnotenie rôznych aspektov softvérového produktu alebo procesu."
     },
     {
       question: "Čo je cieľom softvérových metrík?",
       options: [
-        "Zvýchlenie vývoja",
-        "Meranie a hodnotenie rôznych aspektov softvérového vývoja",
-        "Automatické testovanie",
-        "Distribúcia softvéru"
+        "Automatizovať testovanie systémov",
+        "Merať a hodnotiť aspekty vývoja",
+        "Distribuovať softvérové produkty online",
+        "Zvýchliť proces kompilácie kódu"
       ],
       correct: 1,
       explanation: "Cieľom softvérových metrík je meranie a hodnotenie rôznych aspektov softvérového vývoja, čo umožňuje priebežné hodnotenie a zlepšovanie kvality softvéru."
     },
     {
-      question: "Aký je význam metriky cyklomatická zložitosť?",
+      question: "Čo meria cyklomatická zložitosť?",
       options: [
-        "Počet priamych potomkov triedy",
-        "Počet lineárne nezávislých ciest programu",
-        "Počet riadkov kódu",
-        "Počet metód v triede"
+        "Počet riadkov zdrojového kódu",
+        "Počet metód v každej triede",
+        "Počet lineárne nezávislých ciest",
+        "Počet tried v projekte celkom"
       ],
-      correct: 1,
+      correct: 2,
       explanation: "Cyklomatická zložitosť meria počet lineárne nezávislých ciest programu. Vypočíta sa vzorcom v(G) = e - n + 2, kde e je počet hrán a n je počet uzlov v grafe toku riadenia."
     },
     {
-      question: "Čo znamená vzorec v(G) = e - n + 2 v cyklomatickej zložitosti?",
+      question: "Vzorec v(G) = e - n + 2, čo predstavuje 'e'?",
       options: [
-        "e = počet chýb, n = počet modulov",
-        "e = počet hrán, n = počet uzlov v grafe toku riadenia",
-        "e = počet tried, n = počet metód",
-        "e = počet riadkov, n = počet funkcií"
+        "Počet tried v systéme",
+        "Počet hrán v grafe",
+        "Počet chýb v kóde",
+        "Počet modulov"
       ],
       correct: 1,
       explanation: "V cyklomatickej zložitosti: e je počet hrán a n je počet uzlov v diagrame toku riadenia programu. Výsledok udáva počet lineárne nezávislých ciest."
@@ -372,10 +374,10 @@
     {
       question: "Aké typy metrík poznáme?",
       options: [
-        "Len procesné metriky",
+        "Len produktové a procesné metriky vývoja",
         "Metriky pre výrobok, proces a zdroje",
-        "Len produktové metriky",
-        "Len objektovo-orientované metriky"
+        "Iba objektovo-orientované softvérové metriky",
+        "Len metriky pre kvalitu a dokumentáciu"
       ],
       correct: 1,
       explanation: "Softvérové metriky môžeme rozdeliť na: Metriky pre výrobok (veľkosť, zložitosť, spoľahlivosť), Metriky pre proces (úsilie, náklady, čas) a Metriky pre zdroje."
@@ -383,69 +385,69 @@
 
     // GQM
     {
-      question: "Čo znamená GQM?",
+      question: "Čo znamená skratka GQM?",
       options: [
-        "General Quality Management",
-        "Goal Question Metric",
-        "Good Quality Measurement",
-        "Global Quality Model"
+        "General Quality Management systém",
+        "Goal Question Metric prístup",
+        "Good Quality Measurement model",
+        "Global Quality Methodology štandard"
       ],
       correct: 1,
       explanation: "GQM znamená Goal-Question-Metric. Je to prístup zhora-nadol na vytvorenie meracieho systému založeného na cieľoch pre vývoj softvéru."
     },
     {
-      question: "Aké sú základné fázy metódy GQM podľa Berghout a Solingen?",
+      question: "Fázy GQM podľa Berghout a Solingen?",
       options: [
-        "Analýza, Návrh, Implementácia, Testovanie",
+        "Analýza, Návrh, Implementácia, Testovanie projektu",
         "Plánovanie, Definícia, Zbieranie dát, Interpretácia",
-        "Požiadavky, Špecifikácia, Vývoj, Údržba",
-        "Inicializácia, Exekúcia, Kontrola, Uzavretie"
+        "Požiadavky, Špecifikácia, Vývoj, Údržba systému",
+        "Inicializácia, Exekúcia, Kontrola, Uzavretie procesu"
       ],
       correct: 1,
       explanation: "Základné fázy GQM sú: Plánovanie (zostavenie tímu), Definícia (ciele, otázky, metriky), Zbieranie dát a Interpretácia výsledkov."
     },
     {
-      question: "V GQM definujeme ciele. Ktorý cieľ má správne vlastnosti?",
+      question: "Ktorý cieľ v GQM má správne vlastnosti?",
       options: [
-        "Zavedenie štandardu ISO",
-        "Zníženie chybovosti softvéru o 10 percent",
-        "Zvýšenie zisku spoločnosti",
-        "Odstránenie chýb v softvéri"
+        "Zvýšiť celkový zisk spoločnosti",
+        "Zlepšiť kvalitu produktov firmy",
+        "Znížiť chybovosť o 10 percent",
+        "Odstrániť všetky chyby úplne"
       ],
-      correct: 1,
+      correct: 2,
       explanation: "Správny cieľ musí byť SMART - špecifický, merateľný, dosiahnuteľný, relevantný a časovo ohraničený. 'Zníženie chybovosti o 10 percent' spĺňa tieto kritériá."
     },
     {
-      question: "Koľko dokumentov sa vypracováva vo fáze Definovanie v GQM?",
+      question: "Koľko dokumentov sa vypracováva vo fáze Definovanie?",
       options: [
-        "2 dokumenty",
-        "3 dokumenty - GQM plán, plán merania, plán analýzy",
-        "4 dokumenty",
-        "5 dokumentov"
+        "Iba 2 základné dokumenty",
+        "3 dokumenty (GQM, meranie, analýza)",
+        "4 dokumenty vrátane testovacieho plánu",
+        "5 dokumentov pre kompletnú dokumentáciu"
       ],
       correct: 1,
       explanation: "Vo fáze Definovanie sa vypracovávajú 3 dokumenty: GQM plán, plán merania a plán analýzy."
     },
     {
-      question: "Aké sú úrovne v GQM paradigme?",
+      question: "Úrovne v GQM paradigme sú:",
       options: [
-        "Konceptuálna a Operatívna",
-        "Konceptuálna, Operatívna a Kvantitatívna",
-        "Analýza, Návrh, Implementácia",
-        "Plánovanie, Realizácia, Kontrola"
+        "Konceptuálna, Operatívna, Kvantitatívna",
+        "Plánovanie, Realizácia, Kontrola všetkých procesov",
+        "Analýza, Návrh, Implementácia softvérového systému",
+        "Testovanie, Integrácia, Nasadenie do produkcie"
       ],
-      correct: 1,
+      correct: 0,
       explanation: "V GQM sú definované tri úrovne: Konceptuálna (Ciele), Operatívna (Otázky) a Kvantitatívna (Metriky)."
     },
 
     // ISO 9001 A CERTIFIKÁCIA
     {
-      question: "Počas procesu certifikácie ISO 9001 člen tímu zabudol zaviesť jednu z požiadaviek zavádzanej normy, spôsobilo to nasledovné:",
+      question: "Pri certifikácii ISO 9001 nebola zavedená požiadavka normy:",
       options: [
-        "Systémovú nezhodu a certifikácia je ohrozená",
-        "Systémovú nezhodu a certifikácia nie je ohrozená",
-        "Realizačnú nezhodu a certifikácia je ohrozená",
-        "Realizačnú nezhodu a certifikácia nie je ohrozená"
+        "Systémová nezhoda, certifikácia ohrozená",
+        "Realizačná nezhoda, certifikácia v poriadku",
+        "Systémová nezhoda, certifikácia v poriadku",
+        "Realizačná nezhoda, certifikácia ohrozená"
       ],
       correct: 0,
       explanation: "Nezavedenie požiadavky normy predstavuje systémovú nezhodu, ktorá ohrozuje certifikáciu. Systémové nezhody musia byť odstránené pred udelením certifikátu."
@@ -453,10 +455,10 @@
     {
       question: "Čo je systémová nezhoda?",
       options: [
-        "Jednorázové pochybenie",
-        "Nezavedenie požiadavky normy, generuje ďalšie nezhody",
-        "Chyba v dokumentácii",
-        "Oneskorenie projektu"
+        "Zabudnutie jednej úlohy pracovníkom",
+        "Nezavedenie požiadavky, generuje ďalšie chyby",
+        "Chyba len v dokumentácii projektu",
+        "Malé oneskorenie v harmonograme"
       ],
       correct: 1,
       explanation: "Systémová nezhoda znamená nezavedenie a nerealizovanie niektorej z požiadaviek normy. Systémové nezhody generujú ďalšie nezhody a ich opakovanie."
@@ -464,280 +466,280 @@
     {
       question: "Čo je realizačná nezhoda?",
       options: [
-        "Chyba v celom systéme",
-        "Nevykonanie niektorých stanovených akcií, negeneruje ďalšie nezhody",
-        "Chyba v architektúre",
-        "Nedostatok dokumentácie"
+        "Chyba ovplyvňujúca celý systém kvalitne",
+        "Nevykonanie akcií, negeneruje ďalšie chyby",
+        "Kritická chyba v architektúre systému",
+        "Úplný nedostatok dokumentácie projektu"
       ],
       correct: 1,
       explanation: "Realizačná nezhoda je nevykonanie niektorých zo stanovených akcií. Vzniká zabudnutím alebo zanedbaním požiadaviek. Takáto nezhoda negeneruje ďalšie nezhody."
     },
     {
-      question: "Aké sú zásady manažérstva kvality podľa ISO 9000?",
+      question: "Koľko zásad manažérstva má ISO 9000?",
       options: [
-        "Len orientácia na zákazníka a vodcovstvo",
-        "Orientácia na zákazníka, Vodcovstvo, Angažovanosť pracovníkov, Procesný prístup, Systémový prístup, Neustále zlepšovanie, Rozhodnutia na faktoch",
-        "Len procesný a systémový prístup",
-        "Len neustále zlepšovanie"
+        "5 základných zásad kvality",
+        "7 hlavných zásad manažérstva",
+        "9 komplexných zásad systému",
+        "10 všeobecných zásad procesov"
       ],
       correct: 1,
       explanation: "ISO 9000 definuje 7 hlavných zásad manažérstva kvality vrátane orientácie na zákazníka, vodcovstva, angažovanosti pracovníkov a ďalších."
     },
     {
-      question: "Aké sú benefity ISO štandardov pre softvérové inžinierstvo?",
+      question: "Benefit ISO štandardov pre softvér?",
       options: [
-        "Povinnosť používať konkrétne jazyky",
-        "Zníženie rizika a nákladov, zvýšenie dôvery zákazníka",
-        "Automatické zabezpečenie kompatibility",
-        "Obmedzenie inovácií"
+        "Obmedzenie inovácií v projektoch",
+        "Zníženie rizika, vyššia dôvera",
+        "Automatická kompatibilita všetkého",
+        "Povinnosť konkrétnych jazykov"
       ],
       correct: 1,
       explanation: "ISO štandardy prinášajú zníženie rizika a nákladov, zvyšujú dôveru zákazníka v kvalitu softvéru a pomáhajú zabezpečiť konzistentnosť procesov."
     },
     {
-      question: "Z ktorých noriem sa skladá rodina ISO 9000?",
+      question: "Z čoho sa skladá rodina ISO 9000?",
       options: [
-        "Len ISO 9001",
-        "ISO 9000 (základy), ISO 9001 (požiadavky), ISO 9004 (zlepšovanie)",
-        "ISO 9000 a ISO 9126",
-        "ISO 9001 a ISO 25000"
+        "ISO 9000, 9001, 9004",
+        "Len ISO 9001 pre kvalitu",
+        "ISO 9000 a ISO 9126 kvalita",
+        "ISO 9001 a ISO 25000 systémy"
       ],
-      correct: 1,
+      correct: 0,
       explanation: "Rodina ISO 9000 obsahuje: ISO 9000:2005 (základy a slovník), ISO 9001:2000 (požiadavky), ISO 9004:2000 (smernica na zlepšovanie)."
     },
 
     // ISO 9126 CHARAKTERISTIKY KVALITY
     {
-      question: "Aké sú charakteristiky kvality softvéru podľa ISO 9126?",
+      question: "Charakteristiky kvality podľa ISO 9126?",
       options: [
-        "Rýchlosť, Cena, Design",
+        "Rýchlosť, Cena, Dizajn, Popularita produktu",
+        "Len Funkčnosť, Spoľahlivosť a Použiteľnosť",
         "Funkčnosť, Spoľahlivosť, Použiteľnosť, Účinnosť, Udržiavateľnosť, Prenositeľnosť",
-        "Výkon, Bezpečnosť, Dostupnosť",
-        "Modularita, Škálovateľnosť, Dokumentácia"
+        "Výkon, Bezpečnosť, Dostupnosť, Škálovateľnosť"
       ],
-      correct: 1,
+      correct: 2,
       explanation: "ISO 9126 definuje 6 hlavných charakteristík kvality: Funkčnosť, Spoľahlivosť, Použiteľnosť, Účinnosť, Udržiavateľnosť a Prenositeľnosť."
     },
     {
-      question: "Aké subcharakteristiky má Funkčnosť v ISO 9126?",
+      question: "Subcharakteristiky Funkčnosti v ISO 9126?",
       options: [
-        "Len vhodnosť a presnosť",
-        "Vhodnosť, Presnosť, Schopnosť spolupracovať, Bezpečnosť",
-        "Len bezpečnosť",
-        "Výkon a spoľahlivosť"
+        "Výkon a spoľahlivosť systému",
+        "Vhodnosť, Presnosť, Spolupráca, Bezpečnosť",
+        "Len bezpečnosť a presnosť údajov",
+        "Rýchlosť a efektívnosť procesov"
       ],
       correct: 1,
       explanation: "Funkčnosť má subcharakteristiky: vhodnosť, presnosť, schopnosť spolupracovať, bezpečnosť a zhoda s požiadavkami na funkčnosť."
     },
     {
-      question: "Aké subcharakteristiky má Spoľahlivosť v ISO 9126?",
+      question: "Subcharakteristiky Spoľahlivosti?",
       options: [
-        "Len zrelosť",
+        "Presnosť a bezpečnosť",
         "Zrelosť, Odolnosť, Obnoviteľnosť",
-        "Len obnoviteľnosť",
-        "Rýchlosť a presnosť"
+        "Výkon a rýchlosť systému",
+        "Modularita a flexibilita"
       ],
       correct: 1,
       explanation: "Spoľahlivosť zahŕňa: zrelosť/vyspelosť, odolnosť voči chybám, obnoviteľnosť a zhodu s požiadavkami."
     },
     {
-      question: "Čo patrí pod Použiteľnosť v ISO 9126?",
+      question: "Čo patrí pod Použiteľnosť?",
       options: [
-        "Len zrozumiteľnosť",
+        "Výkon a efektívnosť systémov",
         "Zrozumiteľnosť, Zvládnuteľnosť, Prevádzkovateľnosť, Atraktivita",
-        "Len atraktivita",
-        "Rýchlosť a efektívnosť"
+        "Testovateľnosť a udržiavateľnosť kódu",
+        "Bezpečnosť a kompatibilita"
       ],
       correct: 1,
       explanation: "Použiteľnosť obsahuje: zrozumiteľnosť, zvládnuteľnosť, prevádzkovateľnosť, atraktivitu a zhodu s požiadavkami."
     },
     {
-      question: "Aké subcharakteristiky má Účinnosť v ISO 9126?",
+      question: "Subcharakteristiky Účinnosti?",
       options: [
-        "Presnosť a bezpečnosť",
-        "Reakčný čas a Využitie zdrojov",
-        "Modularita a flexibilita",
+        "Reakčný čas, Využitie zdrojov",
+        "Presnosť a bezpečnosť údajov",
+        "Modularita a flexibilita kódu",
         "Testovateľnosť a udržiavateľnosť"
       ],
-      correct: 1,
+      correct: 0,
       explanation: "Účinnosť má dve hlavné subcharakteristiky: reakčný čas (odozva systému) a využitie zdrojov (efektívnosť)."
     },
 
     // V-MODEL
     {
-      question: "Kedy je vhodné používať V-model testovania?",
+      question: "Kedy je vhodný V-model?",
       options: [
-        "Pre malé a stredné projekty s nejasne definovanými požiadavkami",
-        "Pre malé a stredné projekty s jasne definovanými požiadavkami",
+        "Pre malé projekty s jasnými požiadavkami",
+        "Pre všetky typy projektov bez ohľadu na veľkosť",
         "Pre veľké projekty s nejasne definovanými požiadavkami",
-        "Pre všetky typy projektov"
+        "Len pre projekty s častými zmenami"
       ],
-      correct: 1,
+      correct: 0,
       explanation: "V-model je vhodný pre malé a stredné projekty, kde sú jasne definované a pevne stanovené požiadavky. Nie je vhodný pre projekty s častými zmenami požiadaviek."
     },
     {
-      question: "Pri V-modeli testovania, akceptačné testovanie sa pripravia podľa:",
+      question: "Akceptačné testy sa pripravia podľa:",
       options: [
-        "Kódu",
         "Špecifikovaných požiadaviek",
-        "Modulov",
-        "Architektúry"
+        "Podľa implementovaného kódu",
+        "Podľa navrhnutých modulov",
+        "Podľa architektúry systému"
       ],
-      correct: 1,
+      correct: 0,
       explanation: "Akceptačné testy sa vytvárajú vo fáze analýzy požiadaviek podľa potrieb zákazníka a špecifikovaných požiadaviek."
     },
     {
-      question: "Čo testuje unit testovanie vo V-modeli?",
+      question: "Čo testuje unit testovanie?",
       options: [
-        "Celý systém",
+        "Kompletnú integráciu všetkých modulov",
         "Technický návrh na úrovni kódu",
-        "Integráciu modulov",
-        "Akceptáciu používateľmi"
+        "Akceptáciu zo strany používateľov",
+        "Celý systém vrátane databázy"
       ],
       correct: 1,
       explanation: "Unit testovanie testuje na úrovni kódu a overuje technický návrh. Vykonáva sa vo fáze návrhu modulu. Nie je schopný otestovať všetky chyby."
     },
     {
-      question: "Čo testuje integračné testovanie vo V-modeli?",
+      question: "Integračné testovanie testuje:",
       options: [
-        "Jednotlivé funkcie",
-        "Spoluprácu modulov",
-        "Výkon systému",
-        "Používateľské rozhranie"
+        "Iba jednotlivé funkcie izolované",
+        "Spoluprácu všetkých modulov systému",
+        "Len výkon celého systému pod záťažou",
+        "Výlučne používateľské rozhranie GUI"
       ],
       correct: 1,
       explanation: "Integračné testovanie zaisťuje, že všetky moduly spolupracujú dobre. Testy sú vytvorené vo fáze architektonického návrhu."
     },
     {
-      question: "Čo testuje systémové testovanie vo V-modeli?",
+      question: "Systémové testovanie kontroluje:",
       options: [
-        "Jednotlivé moduly",
-        "Kompletnú funkčnosť systému, výkon a regresné testovanie",
-        "Integráciu komponentov",
-        "Kvalitu kódu"
+        "Len jednotlivé moduly samostatne",
+        "Kompletnú funkčnosť, výkon, regresiu",
+        "Výlučne integráciu komponentov",
+        "Iba kvalitu zdrojového kódu"
       ],
       correct: 1,
       explanation: "Systémové testovanie kontroluje kompletnú funkčnosť systému. Viac pozornosti sa venuje testovaniu výkonu a regresnému testovaniu."
     },
     {
-      question: "Čo testuje akceptačné testovanie vo V-modeli?",
+      question: "Akceptačné testovanie overuje:",
       options: [
-        "Výkon aplikácie",
-        "Kompatibilitu s inými systémami a nefunkcionálne požiadavky",
-        "Bezpečnosť systému",
-        "Dokumentáciu"
+        "Výkon aplikácie pod veľkou záťažou",
+        "Kompatibilitu a nefunkcionálne požiadavky",
+        "Bezpečnosť proti hackerom",
+        "Kvalitu dokumentácie projektu"
       ],
       correct: 1,
       explanation: "Akceptačné testovanie zabezpečuje, že systém je kompatibilný s inými systémami. V užívateľskom prostredí sa testujú nefunkcionálne problémy ako čas načítania a výkon."
     },
     {
-      question: "Aká je výhoda V-modelu?",
+      question: "Výhoda V-modelu je:",
       options: [
-        "Flexibilita pri zmenách",
-        "Poruchy sa zistia už v počiatočnom štádiu",
-        "Minimálna dokumentácia",
-        "Rýchly vývoj"
+        "Flexibilita pri častých zmenách požiadaviek",
+        "Skoré odhalenie chýb v počiatočnom štádiu",
+        "Minimálna potreba dokumentácie projektu",
+        "Veľmi rýchly a efektívny vývoj"
       ],
       correct: 1,
       explanation: "V-model je disciplinovaný model, kde sa plánovanie, testovanie a navrhovanie testov vykonáva ešte pred kódovaním. Poruchy sa zistia už v samotnom počiatočnom štádiu."
     },
     {
-      question: "Aká je nevýhoda V-modelu?",
+      question: "Nevýhoda V-modelu je:",
       options: [
-        "Príliš jednoduchý",
-        "Nie je vhodný pre zložité projekty a projekty s častými zmenami požiadaviek",
-        "Nedostatočné testovanie",
-        "Príliš veľa dokumentácie"
+        "Príliš jednoduchý na použitie v praxi",
+        "Nevhodný pre zložité a meniace sa projekty",
+        "Nedostatočné testovanie všetkých modulov",
+        "Vyžaduje príliš veľa dokumentácie"
       ],
       correct: 1,
       explanation: "V-model nie je vhodný pre žiadne zložité projekty ani pre prebiehajúci projekt, ktorý je nejasný a v ktorom dochádza k zmenám v požiadavkách."
     },
     {
-      question: "Aké fázy má V-model na strane verifikácie?",
+      question: "Verifikačná fáza V-modelu obsahuje:",
       options: [
-        "Len analýza požiadaviek",
-        "Analýza požiadaviek, Návrh systému, Architektonický návrh, Návrh modulu, Kódovanie",
-        "Len kódovanie a testovanie",
-        "Plánovanie a implementácia"
+        "Analýzu, Návrh systému, Architektúru, Modul, Kódovanie",
+        "Len kódovanie a následné testovanie celého systému",
+        "Výlučne plánovanie a implementáciu všetkých modulov",
+        "Iba testovanie a nasadenie do produkčného prostredia"
       ],
-      correct: 1,
+      correct: 0,
       explanation: "Verifikačná fáza V-modelu obsahuje: Analýzu požiadaviek, Návrh systému, Architektonický návrh, Návrh modulu a Fázu kódovania."
     },
 
     // AGILNÝ VÝVOJ
     {
-      question: "Aká je rola zákazníka v agilnom vývoji?",
+      question: "Rola zákazníka v agilnom vývoji:",
       options: [
-        "Pasívna",
         "Aktívna",
+        "Pasívna",
         "Žiadna",
         "Občasná"
       ],
-      correct: 1,
+      correct: 0,
       explanation: "V agilnom modeli má zákazník aktívnu rolu. Vo vývojovom tíme je zástupca zákazníka, ktorý udržiava kontakt so zákazníkom počas vývoja softvéru a dôraz sa kladie na spokojnosť zákazníkov."
     },
     {
-      question: "Aký je hlavný princíp agilného modelu vývoja?",
+      question: "Hlavný princíp agilného modelu:",
       options: [
-        "Rozsiahla dokumentácia",
-        "Prispôsobivosť procesov a spokojnosť zákazníkov",
-        "Striktné dodržiavanie plánu",
-        "Minimálna komunikácia"
+        "Rozsiahla dokumentácia všetkých procesov",
+        "Prispôsobivosť a spokojnosť zákazníkov",
+        "Striktné dodržiavanie počiatočného plánu",
+        "Minimalizovať komunikáciu v tíme"
       ],
       correct: 1,
       explanation: "V agilnom modeli sa dôraz kladie na prispôsobivosť procesov a spokojnosť zákazníkov. Model bol vytvorený kvôli zmenám uprostred vývoja."
     },
     {
-      question: "Ako dlho trvá jedna iterácia v agilnom modeli?",
+      question: "Dĺžka jednej iterácie v agilnom modeli:",
       options: [
-        "1 týždeň",
         "2-3 týždne",
+        "1 týždeň",
         "1 mesiac",
         "3 mesiace"
       ],
-      correct: 1,
+      correct: 0,
       explanation: "Každá iterácia v agilnom modeli je malá, aby sa dala ľahko spravovať. Môže byť hotová za dva-tri týždne."
     },
     {
-      question: "Aká je veľkosť vývojového tímu v agilnom modeli?",
+      question: "Veľkosť agilného vývojového tímu:",
       options: [
-        "2-3 ľudia",
         "5-9 ľudí",
+        "2-3 ľudia",
         "10-15 ľudí",
         "20+ ľudí"
       ],
-      correct: 1,
+      correct: 0,
       explanation: "V agilnom modeli sa odporúča, aby veľkosť vývojového tímu bola malá (5 až 9 ľudí), aby členovia tímu mohli komunikovať tvárou v tvár."
     },
     {
-      question: "Čo je pair programming v agilnom vývoji?",
+      question: "Čo je pair programming?",
       options: [
-        "Dvaja programátori pracujú samostatne",
-        "Jeden programátor kóduje, druhý kontroluje kód a menia si role",
-        "Dvaja programátori testujú kód",
-        "Programátori pracujú na rôznych projektoch"
+        "Dvaja programátori pracujú úplne samostatne",
+        "Jeden kóduje, druhý kontroluje a menia si role",
+        "Dvaja programátori testujú hotový kód",
+        "Programátori pracujú na odlišných projektoch"
       ],
       correct: 1,
       explanation: "Pri agilnom vývoji spolupracujú dvaja programátori. Jeden kóduje a druhý kontroluje kód. Obaja programátori stále menia svoje úlohy."
     },
     {
-      question: "Aká je výhoda agilného modelu?",
+      question: "Výhoda agilného modelu:",
       options: [
-        "Rozsiahla dokumentácia",
-        "Málo chýb, krátky čas iterácie, kontakt so zákazníkom",
-        "Dokonalé plánovanie",
-        "Minimálna komunikácia"
+        "Rozsiahla dokumentácia celého projektu",
+        "Málo chýb, krátke iterácie, kontakt so zákazníkom",
+        "Dokonalé plánovanie od začiatku do konca",
+        "Minimálna potreba komunikácie medzi členmi"
       ],
       correct: 1,
       explanation: "Výhody agilného modelu zahŕňajú: málo chýb (pair programming), krátky čas iterácie, priamy kontakt so zákazníkom, tímovú prácu a jednoduché, flexibilné procesy."
     },
     {
-      question: "Aká je nevýhoda agilného modelu?",
+      question: "Nevýhoda agilného modelu:",
       options: [
-        "Príliš veľa dokumentácie",
-        "Nemôže zvládnuť zložité závislosti, nedostatok formálnej dokumentácie",
-        "Príliš pomalý",
-        "Nefunguje pre malé projekty"
+        "Príliš veľa dokumentácie spomaľuje vývoj",
+        "Zložité závislosti, nedostatok dokumentácie",
+        "Je príliš pomalý na moderné projekty",
+        "Nefunguje vôbec pre malé projekty"
       ],
       correct: 1,
       explanation: "Nevýhody: nemôže zvládnuť zložité závislosti, nedostatok formálnej dokumentácie môže vytvoriť zmätok, závislosť od zástupcu zákazníka a problémy s odhadmi."
@@ -745,207 +747,194 @@
 
     // CMMI
     {
-      question: "Koľko úrovní má CMMI maturity model?",
+      question: "Počet úrovní CMMI maturity modelu:",
       options: [
-        "3 úrovne",
         "5 úrovní",
+        "3 úrovne",
         "7 úrovní",
         "10 úrovní"
       ],
-      correct: 1,
+      correct: 0,
       explanation: "CMMI maturity model má 5 úrovní: 1. Počiatočná (Initial), 2. Opakovateľná (Managed), 3. Definovaná (Defined), 4. Riadená (Quantitatively Managed), 5. Optimalizujúca (Optimizing)."
     },
     {
-      question: "Aké sú capability levels v CMMI?",
+      question: "Capability levels v CMMI:",
       options: [
-        "3 úrovne",
-        "6 úrovní: Neúplná, Vykonávaná, Opakovateľná, Definovaná, Riadená, Optimalizujúca",
-        "4 úrovne",
-        "7 úrovní"
+        "6 úrovní od Neúplnej po Optimalizujúcu",
+        "Len 3 základné úrovne procesov",
+        "4 úrovne pre jednoduchosť",
+        "7 komplexných úrovní schopností"
       ],
-      correct: 1,
+      correct: 0,
       explanation: "Capability levels: 0. Neúplná, 1. Vykonávaná, 2. Opakovateľná (Managed), 3. Definovaná, 4. Riadená (Quantitatively Managed), 5. Optimalizujúca (Optimizing)."
     },
     {
-      question: "Aký je prínos CMMI?",
+      question: "Prínos CMMI pre organizáciu:",
       options: [
-        "Len zvýšená produktivita",
-        "Zlepšenie plánovania, produktivita, kvalita, spokojnosť zákazníka, nižšie náklady",
-        "Len nižšie náklady",
-        "Len lepšia dokumentácia"
+        "Zlepšenie plánovania, produktivita, kvalita, spokojnosť",
+        "Len zvýšená produktivita tímu",
+        "Výlučne nižšie náklady na vývoj",
+        "Iba lepšia dokumentácia procesov"
       ],
-      correct: 1,
+      correct: 0,
       explanation: "Prínos CMMI: Zlepšenie predpovede plánovania, zvýšená produktivita, vylepšená kvalita, väčšie uspokojenie zákazníka, vyššia morálka zamestnancov, zníženie nákladov na kvalitu."
     },
     {
-      question: "Aké reprezentácie má CMMI?",
+      question: "Reprezentácie CMMI modelu:",
       options: [
-        "Len stupňovitú",
-        "Stupňovitú (Maturity levels) a Kontinuálnu (Capability levels)",
-        "Len kontinuálnu",
-        "Hierarchickú a lineárnu"
+        "Stupňovitá a Kontinuálna",
+        "Len stupňovitá pre maturity",
+        "Hierarchická a lineárna reprezentácia",
+        "Len kontinuálna pre capability"
       ],
-      correct: 1,
+      correct: 0,
       explanation: "CMMI má dve reprezentácie: Stupňovitú (zameraná na celkovú úroveň - Maturity levels) a Kontinuálnu (zameraná na procesy - Capability levels)."
     },
 
     // TESTOVANIE VŠEOBECNE
     {
-      question: "Unit test:",
+      question: "Unit test znamená:",
       options: [
-        "Testuje celý systém",
-        "Izoluje časť kódu a overí jeho správnosť",
-        "Testuje kompatibilitu",
-        "Testuje výkon"
+        "Izoluje kód a overí správnosť",
+        "Testuje celý systém kompletne",
+        "Testuje len kompatibilitu systémov",
+        "Overuje výkon pod záťažou"
       ],
-      correct: 1,
+      correct: 0,
       explanation: "Unit test izoluje časť kódu (zvyčajne funkciu alebo metódu) a overuje jej správnosť. Testuje sa na úrovni kódu a overuje technický návrh."
     },
     {
-      question: "Čo je výhodou integračného testovania?",
+      question: "Výhoda integračného testovania:",
       options: [
-        "Nízke náklady",
-        "Zlepšenie kvality systému",
-        "Rýchle vykonanie",
-        "Automatizácia"
+        "Veľmi nízke náklady na testovanie",
+        "Zlepšenie kvality celého systému",
+        "Extrémne rýchle vykonávanie testov",
+        "Úplná automatizácia bez práce"
       ],
       correct: 1,
       explanation: "Integračné testovanie zlepšuje kvalitu systému tým, že zaisťuje, že všetky moduly spolupracujú dobre a odhaľuje kritické chyby v spolupráci modulov."
     },
     {
-      question: "Aký je cieľ systémového testovania?",
+      question: "Cieľ systémového testovania:",
       options: [
-        "Testovať časť systému",
-        "Testovať kompletný integrovaný systém",
+        "Testovať kompletný systém",
+        "Testovať len časti systému",
         "Testovať jednotlivé moduly",
-        "Testovať vizuálny dizajn"
+        "Testovať len vizuálny dizajn"
       ],
-      correct: 1,
+      correct: 0,
       explanation: "Systémové testovanie kontroluje kompletnú funkčnosť systému. V tomto type testovania sa viac pozornosti venuje testovaniu výkonu a regresnému testovaniu."
     },
     {
-      question: "Prečo je dôležité klásť dôraz na kvalitu kódu?",
+      question: "Prečo je kvalita kódu dôležitá?",
       options: [
-        "Nemá vplyv na výkon",
-        "Zlepšuje udržiavateľnosť, čitateľnosť a znižuje chyby",
-        "Má význam len v rozsiahlych projektoch",
-        "Rýchlosť je dôležitejšia než kvalita"
+        "Nemá reálny vplyv na celkový výkon",
+        "Zlepšuje udržiavateľnosť a znižuje chyby",
+        "Dôležitá len v rozsiahlych projektoch",
+        "Rýchlosť je vždy dôležitejšia"
       ],
       correct: 1,
-      explanation: "Kvalitný kód zlepšuje udržiavateľnosť, čitateľnosť a znižuje pravdepodobnosť chýb, čo má pozitívny vpliv na celý životný cyklus softvéru."
+      explanation: "Kvalitný kód zlepšuje udržiavateľnosť, čitateľnosť a znižuje pravdepodobnosť chýb, čo má pozitívny vplyv na celý životný cyklus softvéru."
     },
     {
-      question: "Čo je cieľom testovania softvéru?",
+      question: "Cieľ testovania softvéru:",
       options: [
-        "Len nájsť chyby",
-        "Dosiahnutie požadovanej kvality z hľadiska funkčnosti, spoľahlivosti, výkonnosti, použiteľnosti",
-        "Len zvýšiť rýchlosť",
-        "Len dokumentovať kód"
+        "Dosiahnuť kvalitu - funkčnosť, spoľahlivosť, výkon, použiteľnosť",
+        "Len nájsť čo najviac chýb v kóde",
+        "Výlučne zvýšiť rýchlosť aplikácie",
+        "Iba dokumentovať všetok kód projektu"
       ],
-      correct: 1,
+      correct: 0,
       explanation: "Testovanie softvéru je súbor procesov na kontrolu kvality, ktorých cieľom je dosiahnutie požadovanej kvality z hľadiska funkčnosti, spoľahlivosti, výkonnosti, použiteľnosti a podporovateľnosti."
     },
 
     // ŽIVOTNÝ CYKLUS CHYBY
     {
-      question: "Aké sú hlavné fázy životného cyklu chyby?",
+      question: "Fázy životného cyklu chyby:",
       options: [
-        "Nájdenie a oprava",
         "New, Assigned, Open, Fixed, Retest, Closed, Reopened",
-        "Start a End",
-        "Test a Deploy"
+        "Iba Nájdenie a Oprava chyby",
+        "Start, Test, End procesu",
+        "Test, Deploy, Monitor systému"
       ],
-      correct: 1,
+      correct: 0,
       explanation: "Životný cyklus chyby zahŕňa: New (nová), Assigned (priradená), Open (otvorená), Fixed (opravená), Retest (retestovaná), Closed (zatvorená), Reopened (znovuotvorená)."
     },
     {
-      question: "Aké sú výhody sledovania životného cyklu chyby?",
+      question: "Výhody sledovania životného cyklu chyby:",
       options: [
-        "Len dokumentácia",
-        "Vysokokvalitný produkt, znížené náklady, lepšia komunikácia, skoré odhalenie problémov",
-        "Len rýchlejší vývoj",
-        "Minimálna dokumentácia"
+        "Iba lepšia dokumentácia procesov",
+        "Kvalita, nižšie náklady, komunikácia, skorá detekcia",
+        "Výlučne rýchlejší vývoj produktu",
+        "Minimalizácia potrebnej dokumentácie"
       ],
       correct: 1,
       explanation: "Výhody: Vysokokvalitný produkt, znížené náklady (dobre zdokumentované kroky), lepšia komunikácia v tíme, skoré odhalenie problémov, zvýšená spokojnosť zákazníkov."
     },
     {
-      question: "Čo je rozdiel medzi Error, Bug a Failure?",
+      question: "Rozdiel Error, Bug a Failure:",
       options: [
+        "Error → Bug → Failure",
         "Sú to synonymá",
-        "Error (chyba/omyl) má za následok Bug (defekt), ktorý má za následok Failure (zlyhanie)",
-        "Bug je to isté ako Failure",
-        "Error je to isté ako Failure"
+        "Bug = Failure",
+        "Error = Failure"
       ],
-      correct: 1,
+      correct: 0,
       explanation: "Error (chyba, omyl programátora) vedie k Bug (defekt v kóde), ktorý sa prejavuje ako Failure (zlyhanie systému pri vykonaní)."
-    },
-
-    // ŠTANDARD ISO/IEC/IEEE 29119
-    {
-      question: "Koľko častí má štandard ISO/IEC/IEEE 29119?",
-      options: [
-        "3 časti",
-        "5 častí: Concepts, Processes, Documentation, Techniques, Keyword-driven",
-        "2 časti",
-        "7 častí"
-      ],
-      correct: 1,
-      explanation: "Štandard ISO/IEC/IEEE 29119 má 5 častí: Part 1 (Concepts and definitions), Part 2 (Test processes), Part 3 (Test documentation), Part 4 (Test techniques), Part 5 (Keyword-driven testing)."
     },
 
     // DOPLŇUJÚCE OTÁZKY
     {
       question: "Čo je verifikácia?",
       options: [
-        "Testovanie produktu zákazníkom",
-        "Overenie, či produkt bol vyrobený správne (Are we building the product right?)",
-        "Nasadenie produktu do produkcie",
-        "Dokumentovanie produktu"
+        "Overenie správnej výroby produktu (Are we building it right?)",
+        "Testovanie produktu zákazníkom pred nasadením",
+        "Nasadenie produktu do produkčného prostredia",
+        "Dokumentovanie všetkých funkcií produktu"
       ],
-      correct: 1,
+      correct: 0,
       explanation: "Verifikácia overuje, či produkt bol vyrobený správne podľa špecifikácie (Are we building the product right?). Ide o objektívne hodnotenie."
     },
     {
       question: "Čo je validácia?",
       options: [
-        "Kontrola syntaxe kódu",
-        "Overenie, či sme vyrobili správny produkt (Are we building the right product?)",
-        "Kompilácia kódu",
-        "Unit testovanie"
+        "Kontrola syntaxe zdrojového kódu",
+        "Overenie správneho produktu (Are we building the right product?)",
+        "Kompilácia zdrojového kódu",
+        "Unit testovanie modulov"
       ],
       correct: 1,
       explanation: "Validácia overuje, či sme vyrobili správny produkt, ktorý spĺňa potreby zákazníka (Are we building the right product?). Ide o subjektívne hodnotenie."
     },
     {
-      question: "Aká je definícia kvality softvéru?",
+      question: "Definícia kvality softvéru:",
       options: [
-        "Len funkčnosť",
-        "Miera, do akej softvér spĺňa definované požiadavky a uspokojuje potreby používateľov",
-        "Len výkon",
-        "Len cena"
+        "Miera splnenia požiadaviek a potrieb používateľov",
+        "Výlučne funkčnosť systému",
+        "Len výkon aplikácie",
+        "Iba nízka cena"
       ],
-      correct: 1,
+      correct: 0,
       explanation: "Kvalita softvéru je miera, do akej softvér spĺňa definované požiadavky a uspokojuje potreby používateľov, zahŕňa funkčné aj nefunkčné atribúty."
     },
     {
       question: "Čo je black-box testovanie?",
       options: [
-        "Testovanie vnútornej štruktúry",
-        "Testovanie bez znalosti vnútornej implementácie, len na základe špecifikácie",
-        "Testovanie len databázy",
-        "Testovanie výkonu"
+        "Testovanie bez znalosti vnútornej implementácie",
+        "Testovanie vnútornej štruktúry kódu",
+        "Testovanie výlučne databázových tabuliek",
+        "Testovanie len výkonu pod záťažou"
       ],
-      correct: 1,
+      correct: 0,
       explanation: "Black-box testovanie je funkcionálne testovanie bez znalosti vnútornej implementácie. Testeri sa zaujímajú len o to, či systém vykonáva funkcie správne."
     },
     {
       question: "Čo je white-box testovanie?",
       options: [
-        "Testovanie len GUI",
-        "Testovanie s plnou znalosťou vnútornej štruktúry a implementácie",
-        "Testovanie len dokumentácie",
-        "Akceptačné testovanie"
+        "Testovanie výlučne grafického rozhrania GUI",
+        "Testovanie so znalosťou vnútornej štruktúry",
+        "Testovanie len dokumentácie projektu",
+        "Akceptačné testovanie používateľmi"
       ],
       correct: 1,
       explanation: "White-box testovanie je štrukturálne testovanie s plnou znalosťou vnútornej implementácie kódu. Používa sa napr. pri unit testovaní."
@@ -953,10 +942,10 @@
     {
       question: "Čo sú regresné testy?",
       options: [
-        "Testy nových funkcií",
-        "Testy, ktoré overujú, že zmeny v kóde nespôsobili nové chyby v už fungujúcej funkcionalite",
-        "Testy výkonu",
-        "Testy bezpečnosti"
+        "Testy výlučne nových funkcií systému",
+        "Overenie, že zmeny nespôsobili nové chyby",
+        "Testy výkonu systému pod záťažou",
+        "Bezpečnostné testy proti útokom"
       ],
       correct: 1,
       explanation: "Regresné testy overujú, že zmeny, opravy alebo nové funkcie nespôsobili chyby v už existujúcej a fungujúcej funkcionalite systému."
@@ -964,21 +953,21 @@
     {
       question: "Čo je smoke testing?",
       options: [
-        "Testovanie bezpečnosti",
-        "Základné testovanie kritických funkcií na overenie, či je build stabilný pre ďalšie testovanie",
-        "Testovanie výkonu pod záťažou",
-        "Finálne akceptačné testovanie"
+        "Testovanie bezpečnosti proti útokom",
+        "Základné testovanie kritických funkcií pre stabilitu",
+        "Testovanie výkonu pod vysokou záťažou",
+        "Finálne komplexné akceptačné testovanie"
       ],
       correct: 1,
       explanation: "Smoke testing je základné testovanie kritických funkcií, aby sa overilo, či je build dostatočne stabilný na to, aby mohol pokračovať v ďalšom testovaní."
     },
     {
-      question: "Čo je continuous integration (CI)?",
+      question: "Čo je continuous integration?",
       options: [
         "Manuálne testovanie raz týždenne",
-        "Pravidelné automatické začleňovanie zmien kódu do hlavnej vetvy s automatickými testami",
+        "Automatické začleňovanie kódu s testami",
         "Nasadenie do produkcie raz mesačne",
-        "Dokumentovanie zmien"
+        "Dokumentovanie všetkých zmien"
       ],
       correct: 1,
       explanation: "Continuous Integration je vývojová prax, kde sa zmeny kódu pravidelne automaticky začleňujú do hlavnej vetvy a spúšťajú sa automatické testy."
